@@ -1,5 +1,7 @@
 ### **Problem Statement: AWS EKS Infrastructure Deployment**
 
+https://imgur.com/b9iHwVc
+
 **Background:**  
 The provided architecture diagram illustrates a highly available AWS infrastructure setup across two availability zones (us-east-1a and us-east-1b). It consists of public and private subnets, security groups, and networking components like route tables and NAT gateways. The infrastructure is designed for hosting a scalable and secure application, potentially on AWS Elastic Kubernetes Service (EKS).
 
