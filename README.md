@@ -1,33 +1,87 @@
-### **Problem Statement: AWS EKS Infrastructure Deployment**
+# AWS EKS Infrastructure Deployment
 
-https://imgur.com/b9iHwVc
+## Overview
+This project involves deploying a **highly available, scalable, and secure AWS EKS infrastructure** using **Terraform**. The architecture includes **public and private subnets, an Application Load Balancer (ALB), ECS Containers, a NAT Gateway, an RDS PostgreSQL instance, and an Auto Scaling Group**.
 
-**Background:**  
-The provided architecture diagram illustrates a highly available AWS infrastructure setup across two availability zones (us-east-1a and us-east-1b). It consists of public and private subnets, security groups, and networking components like route tables and NAT gateways. The infrastructure is designed for hosting a scalable and secure application, potentially on AWS Elastic Kubernetes Service (EKS).
+## Problem Statement
+The goal is to create an AWS infrastructure that supports containerized applications using **ECS (Elastic Container Service) on EC2 instances**, while ensuring **high availability, security, and scalability**. The deployment should also include an **RDS PostgreSQL database** for data persistence and an **Application Load Balancer (ALB) for handling incoming traffic**.
 
-**Challenges to Address:**
-1. **Automated Deployment with Terraform:**  
-   - Implement infrastructure as code (IaC) using Terraform to provision the AWS networking components, including VPC, subnets, route tables, and security groups.
-   
-2. **High Availability and Redundancy:**  
-   - Ensure that the application can handle failovers by deploying across multiple availability zones.
+## Infrastructure Components
+The following AWS resources will be provisioned using **Terraform**:
 
-3. **Networking and Security Configuration:**  
-   - Properly configure private and public subnets for workload isolation.
-   - Implement security group rules to allow controlled access between application components.
-   - Set up a NAT gateway to enable private subnets to access the internet securely.
+### Networking
+- **VPC (Virtual Private Cloud)** with a CIDR block of `10.0.0.0/16`
+- **Public and Private Subnets** across multiple Availability Zones (AZs)
+- **Internet Gateway** for external access
+- **NAT Gateway** for private subnet instances to access the internet
 
-4. **Scalability and Load Balancing:**  
-   - Integrate an Application Load Balancer (ALB) to distribute traffic across multiple instances or EKS worker nodes.
-   - Ensure private subnets are used for backend services and databases.
+### Compute
+- **ECS Cluster** running on EC2 instances within an **Auto Scaling Group**
+- **Application Load Balancer (ALB)** for distributing traffic across ECS tasks
+- **Security Groups** to control traffic flow between resources
 
-5. **Logging and Monitoring:**  
-   - Implement logging and monitoring solutions (such as CloudWatch, Prometheus, and Grafana) to track system health.
+### Database
+- **Amazon RDS (PostgreSQL)** instance deployed in the private subnet
+- **Subnet Groups and Security Groups** for database access control
 
-6. **CI/CD Integration:**  
-   - Automate deployments using a CI/CD pipeline with Terraform, Kubernetes, and Helm.
+### Deployment & Scaling
+- **ECS Auto Scaling Group** to manage workload demands dynamically
+- **CloudWatch Metrics and Alarms** to monitor resource usage and health
 
-### **Expected Outcome:**
-A fully automated, scalable, and secure AWS infrastructure that supports an EKS-based application deployment, ensuring high availability, proper network segmentation, and security best practices.
+## Prerequisites
+Before deploying this infrastructure, ensure you have:
+- **Terraform installed** (>= v1.0.0)
+- **AWS CLI configured** with appropriate IAM permissions
+- **An AWS account** with access to EKS, ECS, and RDS
 
-Would you like a Terraform script to implement this architecture? 🚀
+## Installation & Deployment
+### Step 1: Clone the Repository
+```sh
+git clone https://github.com/your-repo/aws-eks-infra.git
+cd aws-eks-infra
+```
+
+### Step 2: Initialize Terraform
+```sh
+terraform init
+```
+
+### Step 3: Validate Terraform Configuration
+```sh
+terraform validate
+```
+
+### Step 4: Plan the Deployment
+```sh
+terraform plan
+```
+
+### Step 5: Apply the Configuration
+```sh
+terraform apply -auto-approve
+```
+
+## Outputs
+After successful deployment, Terraform will output:
+- **EKS Cluster Endpoint**
+- **Application Load Balancer DNS Name**
+- **RDS Instance Endpoint**
+- **Public & Private Subnet IDs**
+
+## Monitoring & Logging
+- **CloudWatch Logs** for ECS containers and system monitoring
+- **ALB Access Logs** to analyze incoming traffic
+- **CloudTrail** for auditing API calls
+
+## Cleanup
+To destroy the infrastructure when no longer needed:
+```sh
+terraform destroy -auto-approve
+```
+
+## License
+This project is licensed under the MIT License.
+
+## Author
+Your Name / Organization
+
